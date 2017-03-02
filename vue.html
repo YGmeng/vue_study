@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>vue.js</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="app">
+		<span v-if="text">显示</span>
+		<span v-if="name.indexOf('m')>=0">
+			Name:{{name}}
+		</span>
+		<p v-if="sex=='1'">{{sex}}</p>
+		<p v-else>{{phone}}</p>
+		<p>{{message}}</p>
+		<input type="text" v-model="message">
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Sex</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="person in people">
+					<td>{{person.name}}</td>
+					<td>{{person.age}}</td>
+					<td>{{person.sex}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<ul>
+			<li v-for="n in pagecount">
+				<a href="javascript:void(0)" :class="activeNumber=== n ?'active':''">{{n}}</a>
+			</li>
+		</ul>
+		<p>
+			<button @click="hi">Hi</button>
+		</p>
+		<p>-------------------------------------------</p>
+		<fieldset>
+			<legend>动态添加删除</legend>
+			<div>
+				<label>name</label>
+				<input type="text" name="" v-model="list.name">
+			</div>
+			<div>
+				<label>age</label>
+				<input type="text" name="" v-model="list.age">
+			</div>
+			<div>
+				<label>sex</label>
+				<select v-model="list.sex">
+					<option value="Male">Male</option>
+					<option value="Female">female</option>
+				</select>
+			</div>
+			<div>
+				<label></label>
+				<button @click="creatpeople">CREAT</button>
+			</div>
+		</fieldset>
+		<table>
+			<thead>
+				<tr>
+					<th>name</th>
+					<th>age</th>
+					<th>sex</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(person,index) in lists">
+					<td>{{ person.name  }}</td>
+					<td>{{ person.age  }}</td>
+					<td>{{ person.sex  }}</td>
+					<td :class="'text-center'">
+						<button @click="deletepeople(index)">DELETE</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:'#app',
+			data:{
+				text:false,
+				name:'meng',
+				sex:'0',
+				phone:'13112221111',
+				message:'Hello World ! ',
+				people: [{
+                    name: 'Jack',
+                    age: 30,
+                    sex: 'Male'
+                }, {
+                    name: 'Bill',
+                    age: 26,
+                    sex: 'Male'
+                }, {
+                    name: 'Tracy',
+                    age: 22,
+                    sex: 'Female'
+                }, {
+                    name: 'Chris',
+                    age: 36,
+                    sex: 'Male'
+                }],
+                list:{
+                	name:'',
+                	age:'',
+                	sex:''
+                },
+                lists:[
+                	{
+                		name:'zhangs',
+                		age:'30',
+                		sex:'Male'
+                	},
+                	{
+                		name:'lis',
+                		age:'32',
+                		sex:'Female'
+                	}
+                ],
+                activeNumber:1,
+                pagecount:10
+			},
+			methods:{
+				hi:function(){
+					alert("hello"+this.name);
+				},
+				creatpeople:function(){
+					this.lists.push(this.list);
+					this.list={
+                	name:'',
+                	age:'',
+                	sex:''
+                	}
+				},
+				deletepeople:function(index){
+					this.lists.splice(index,1);
+				}
+			}
+		});
+	</script>
+</html>
